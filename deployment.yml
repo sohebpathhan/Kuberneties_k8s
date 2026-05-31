@@ -1,0 +1,24 @@
+apiVesion: apps/v1
+kind: Deployment
+metadata:
+  name: mydep
+spec:
+  replicas: 3
+  selectors:
+    matchlabels:
+      app: my-dep
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      app: my-dep
+    spec:
+      containers:
+      - image: nginx
+        name: nginx_countainer
+        ports:
+          containerPort: 80
+      - image: httpd 
+        name: httpd_count
+        ports:
+          containerPort: 81
