@@ -24,3 +24,25 @@ Example workflow summary:
 4. Update your `Deployment` to use `myrepo/myapp:1.2.3` and apply it to the cluster.
 
 This approach minimizes manual work and makes deployments predictable and auditable.
+
+## Kubernetes workload controllers
+
+### ReplicaSet
+- What it is: A controller that ensures a specified number of identical Pod replicas are running at all times.
+- Where it is used: Commonly used by `Deployment` objects to manage scaling and rolling updates of stateless applications.
+- Why it is different: `ReplicaSet` focuses on keeping Pod replica counts stable, but it does not manage deployment strategies or rollbacks; `Deployment` adds those higher-level features.
+
+### ReplicationController
+- What it is: An older controller that also keeps a fixed number of Pod replicas running.
+- Where it is used: Mostly legacy clusters or older examples. It has been superseded by `ReplicaSet`.
+- Why it is different: It uses exact label matching and lacks the newer features of `ReplicaSet` and `Deployment`, so it is rarely used for new workloads.
+
+### DaemonSet
+- What it is: A controller that ensures one Pod copy runs on each selected node (or a subset of nodes).
+- Where it is used: Ideal for node-level services such as log collectors, monitoring agents, security tools, or storage drivers.
+- Why it is different: Unlike `ReplicaSet` or `Deployment`, it is not about scaling a fixed number of replicas; it is about deploying a Pod per node for cluster-wide coverage.
+
+### StatefulSet
+- What it is: A controller for stateful applications that need stable network IDs and persistent storage.
+- Where it is used: Databases, message queues, and other stateful services requiring ordered startup, stable Pod identities, and persistent volumes.
+- Why it is different: It preserves the identity of each Pod and manages storage lifecycle, unlike stateless controllers such as `ReplicaSet` and `Deployment`.
