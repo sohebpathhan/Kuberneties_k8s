@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefullSet
+metadata:
+  name: my-statefulset
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: my-ss
+  template:
+    metadata:
+      labels:
+        app: my-ss
+    spec:
+      containers:
+      - name: nginx-count
+        image: nginx
+        ports:
+        - containerPort: 80
+
+---
+#Statefull set required a Headless Service so application should be ables to comunicate with specific pod by its name
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-headless
+spec:
+  selector:
+    app: my-ss
+  clusterIP: None
