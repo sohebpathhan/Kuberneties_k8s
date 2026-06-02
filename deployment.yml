@@ -12,13 +12,14 @@ spec:
     type: RollingUpdate
 
   template:
-    nodeSelector:
-      kubernetes.io/hostname: node01  
     metadata:
       labels:
         app: my-dep
 
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: node01
+
       containers:
       - name: nginx-count
         image: nginx
