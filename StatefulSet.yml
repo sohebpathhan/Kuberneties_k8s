@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: StatefullSet
+kind: StatefulSet
 metadata:
   name: my-statefulset
 spec:
+  serviceName: my-headless
   replicas: 4
   selector:
     matchLabels:
@@ -19,7 +20,6 @@ spec:
         - containerPort: 80
 
 ---
-#Statefull set required a Headless Service so application should be ables to comunicate with specific pod by its name
 apiVersion: v1
 kind: Service
 metadata:
@@ -28,3 +28,6 @@ spec:
   selector:
     app: my-ss
   clusterIP: None
+  ports:
+  - port: 80
+    targetPort: 80
